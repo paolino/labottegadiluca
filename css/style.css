@@ -1,0 +1,50 @@
+/*Generali*/
+body{margin:27px auto 0 auto;color:#000000;background:#ddc891 url('../img/bkg_body.gif') repeat-x top;font-family: Tahoma;ial, Helvetica, sans-serif;font-size:14px;color:#ffffff}
+acronym{border-bottom:0;}
+a{text-decoration:none;color:#fff}
+img{border:0}
+div{margin:0 auto 0 auto;text-align:center;}
+
+div.main{width:900px;}
+div.piva{float:right;text-align:right;background:url('../img/bkg_piva.gif') no-repeat bottom;width:900px;border-bottom:1px solid #ddc891;height:23px;color:#836436;font-size:11px}
+div.top{background:url('../img/bkg_top.gif') no-repeat top;height:224px;clear:both;}
+div.home{margin:30px 0 0 445px;float:left}
+div.home a{width:450px;height:47px;display:block;text-indent:-1000px;overflow:hidden;}
+
+ul.menu{list-style-type:none;float:left;background-color:#937850;margin:108px 0 0 250px;padding:0;}
+ul.menu li{float:left;height:39px;display:block;text-indent:-1000px;overflow:hidden;}
+ul.menu li a{display:block;height:39px;}
+ul.menu li.contatti{background:url('../img/mnu_contatti.gif') no-repeat top;width:78px;}
+ul.menu li.lavori{background:url('../img/mnu_lavori.gif') no-repeat top;width:73px;}
+ul.menu li.workinprogress{background:url('../img/mnu_workinprogress.gif') no-repeat top;width:138px;}
+ul.menu li.collaborazioni{background:url('../img/mnu_collaborazioni.gif') no-repeat top;width:138px;}
+ul.menu li:hover{background-position:bottom;}
+ul.menu li.att{background-position:bottom;}
+
+div.content{background-color:#937850;height:170px;margin-top:3px}
+div.bottom{background:url('../img/bkg_legni.png') repeat-x;height:127px;position:relative;top:-95px;left:0}
+div.dett{text-align:left;padding:34px 0 0 251px}
+
+ul.box{list-style-type:none;margin:0;padding:34px 0 0 50px;float:left}
+ul.box li{float:left;height:147px;display:block;text-indent:-1000px;overflow:hidden;background-repeat:no-repeat;width:147px;margin:0 16px 0 0}
+ul.box li a{display:block;height:147px;}
+ul.box li.cucine{background:url('../img/box_cucine.gif') top;}
+ul.box li.armadi{background:url('../img/box_armadi.gif') top;}
+ul.box li.bagni{background:url('../img/box_bagni.gif') top;}
+ul.box li.librerie{background:url('../img/box_librerie.gif') top;}
+ul.box li.varie{background:url('../img/box_varie.gif') top;}
+ul.box li.workinprogress{background:url('../img/box_workinprogress.gif') top;}
+ul.box li:hover{background-position:bottom;}
+ul.box li.att{background-position:bottom;float:none;}
+ul.box li.in{float:none;height:47px;text-indent:-100px;overflow:visible;margin-top:24px}
+
+div.foto{margin:34px 0 0 37px;float:left;width:571px}
+#gallery, #gallery1 {float:left;width:571px;margin:0;text-align:left}
+#gallery ul, #gallery1 ul { list-style: none;margin:0;padding:0;float:left}
+#gallery ul li, #gallery1 ul li { display: inline;margin:0 10px 0 0;padding:0}
+#gallery ul img, #gallery1 ul img {border: 4px solid #ddc891;margin-bottom:20px}
+#gallery ul a:hover img, #gallery1 ul a:hover img{border: 4px solid #fff;color: #fff;}
+#gallery ul a:hover, #gallery1 ul a:hover { color: #fff; }
+
+div.dett span{float:left;margin:9px 0 0 0}
+div.dett img.loghi{float:left;margin:0 15px 15px 0}
