@@ -14,6 +14,14 @@ import Images
 
 complete = applyTemplateCompiler "templates/template.html" >>> relativizeUrlsCompiler
 
+lavori s = do
+    match (parseGlob $ s ++ ".html") $ route idRoute
+    create (parseIdentifier $  "s" ++ ".html") $ constA mempty
+	>>> requireAll (parseGlob ("photos/" ++ s ++ "/**.jpg") `mappend` inGroup (Just "linked")) 
+		(\p (ts :: [Page String]) -> setField "lavoro" s $ setField "elencoimmagini" (concatMap pageBody $ ts) p )
+	>>> applyTemplateCompiler "templates/foto_elenco.html"
+	>>> complete
+
 
 main :: IO ()
 main = hakyll $ do
@@ -22,22 +30,16 @@ main = hakyll $ do
 
     match  "contatti.html" $ do 
 	route idRoute
-     	compile $ pageCompiler >>> arr (setField "scelta" "contatti") >>> complete
+     	compile $ readPageCompiler >>> arr (setField "scelta" "contatti") >>> complete
     match  "collaborazioni.html" $ do 
 	route idRoute 
-     	compile $ pageCompiler >>> arr (setField "scelta" "collaborazioni") >>> complete
+     	compile $ readPageCompiler >>> arr (setField "scelta" "collaborazioni") >>> complete
     match  "lavori.html" $ do 
 	route idRoute
-     	compile $ pageCompiler >>> arr (setField "scelta" "lavori") >>> complete
+     	compile $ readPageCompiler >>> arr (setField "scelta" "lavori") >>> complete
 
-    match "bagni.html" $ route idRoute
-    create "bagni.html" $ constA mempty
-	>>> requireAll ("photos/bagni/**.jpg" `mappend` inGroup (Just "linked")) 
-		(\p (ts :: [Page String]) -> setField "elencoimmagini" (concatMap pageBody $ ts) p )
-	>>> applyTemplateCompiler "templates/foto_elenco.html"
-	>>> complete
-
-
+    _  <- mapM lavori ["armadi","bagni","cucine","varie","librerie"]
+ 
     match "js/*" $ do
         route   idRoute
         compile copyFileCompiler
