@@ -1,7 +1,7 @@
 -- | Exports simple compilers to just copy files
 --
 {-# LANGUAGE GeneralizedNewtypeDeriving, DeriveDataTypeable #-}
-module Images (imageResizeCompiler) where
+module Images (imageResizeCompiler, thumbResizeCompiler) where
 
 import Control.Arrow ((>>^))
 import System.Cmd (rawSystem, system)
@@ -23,3 +23,14 @@ instance Writable Images where
 
 imageResizeCompiler :: Int -> Int -> Compiler Resource Images
 imageResizeCompiler w h = getIdentifier >>^ \y ->  Images (w,h,toFilePath y)
+
+
+newtype Thumbs = Thumbs FilePath
+                 deriving (Show, Eq, Ord, Binary, Typeable)
+
+instance Writable Thumbs where
+    write dst (Thumbs src) = let r = "./makethumb " ++ " \"" ++ src ++ "\" \"" ++  dst ++ "\""
+	in system r  >> return ()
+
+thumbResizeCompiler ::  Compiler Resource Thumbs
+thumbResizeCompiler = getIdentifier >>^ \y ->  Thumbs (toFilePath y)

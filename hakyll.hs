@@ -16,7 +16,7 @@ complete = applyTemplateCompiler "templates/template.html" >>> relativizeUrlsCom
 
 lavori s = do
     match (parseGlob $ s ++ ".html") $ route idRoute
-    create (parseIdentifier $  "s" ++ ".html") $ constA mempty
+    create (parseIdentifier $  s ++ ".html") $ constA mempty
 	>>> requireAll (parseGlob ("photos/" ++ s ++ "/**.jpg") `mappend` inGroup (Just "linked")) 
 		(\p (ts :: [Page String]) -> setField "lavoro" s $ setField "elencoimmagini" (concatMap pageBody $ ts) p )
 	>>> applyTemplateCompiler "templates/foto_elenco.html"
@@ -38,7 +38,11 @@ main = hakyll $ do
 	route idRoute
      	compile $ readPageCompiler >>> arr (setField "scelta" "lavori") >>> complete
 
-    _  <- mapM lavori ["armadi","bagni","cucine","varie","librerie"]
+    match "index.html" $ do
+	route idRoute
+	compile $ readPageCompiler >>> complete
+
+    _  <- mapM lavori ["armadi","tavoli","bagni","cucine","varie","librerie","progetti"]
  
     match "js/*" $ do
         route   idRoute
@@ -52,7 +56,7 @@ main = hakyll $ do
         compile $ imageResizeCompiler 500 400
     group "thumbs" . match "photos/**.jpg" $ do
 	route $ setExtension ".thumb.jpg"
-	compile $ imageResizeCompiler 75 75
+	compile $ thumbResizeCompiler
     group "linked" . match "photos/**.jpg" $ compile $
 	arr (fromMap . (\s -> fromList [("path",s),("thumb",replaceExtension s "thumb.jpg")]) . unResource) 
 	>>> applyTemplateCompiler "templates/immagine.html" 
