@@ -12,14 +12,15 @@ div.piva{float:right;text-align:right;background:url('../img/bkg_piva.gif') no-r
 div.top{background:url('../img/bkg_top.gif') no-repeat top;height:224px;clear:both;}
 div.home{margin:30px 0 0 445px;float:left}
 div.home a{width:450px;height:47px;display:block;text-indent:-1000px;overflow:hidden;}
-div.root {position:relative;top:80px;}
-div.root img{border:5px solid #ddc891;}
+div.root {position:relative;top:20px;}
 ul.menu{list-style-type:none;float:right;background-color:#937850;border-right:10px solid #836436; margin:108px 0 0 250px;padding:0;}
 ul.menu li{float:left;height:39px;display:block;text-indent:-1000px;overflow:hidden;}
 ul.menu li a{display:block;height:39px;}
 ul.menu li.contatti{background:url('../img/mnu_contatti.gif') no-repeat top;width:78px;}
-ul.menu li.lavori{background:url('../img/mnu_lavori.gif') no-repeat top;width:73px;}
-ul.menu li.progetti{background:url('../img/mnu_progetti.gif') no-repeat top;width:138px;}
+div.lavori a{display:block;height:349px;}
+div.lavori{float:left;height:349px;display:block;text-indent:-1000px;overflow:hidden;margin:24px 70px;}
+div.lavori{background:url('../img/ingresso.gif') no-repeat top;width:464px;}
+div.lavori:hover{background-position:bottom;}
 ul.menu li.collaborazioni{background:url('../img/mnu_collaborazioni.gif') no-repeat top;width:138px;}
 ul.menu li:hover{background-position:bottom;}
 ul.menu li.att{background-position:bottom;}
@@ -51,3 +52,7 @@ div.foto{margin:34px 0 0 37px;float:left;width:571px}
 
 div.dett span{float:left;margin:9px 0 0 0}
 div.dett img.loghi{float:left;margin:0 15px 15px 0}
+
+ul.intro{list-style-type:none;margin:20px;padding:4px;float:left}
+ul.intro{font-size:24px;background-color:#937a50;}
+ul.intro li{text-align:left;}

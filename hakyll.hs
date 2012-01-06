@@ -47,6 +47,9 @@ main = hakyll $ do
     match "js/*" $ do
         route   idRoute
         compile copyFileCompiler
+    match "favicon.ico" $ do
+        route   idRoute
+        compile copyFileCompiler
     -- Compress CSS
     match "css/*" $ do
         route   idRoute

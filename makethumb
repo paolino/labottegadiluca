@@ -1,2 +1,3 @@
+#!/bin/bash
 convert -define jpeg:size=200x200 "$1" -thumbnail '100x100>' /tmp/1.png
 convert -background 'rgb(147,120,80)'  /tmp/1.png -gravity center -extent 102x102 -raise 1 "$2"

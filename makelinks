@@ -1,8 +1,10 @@
-convert -define jpeg:size=200x200 $1.jpg -thumbnail '175x143>' /tmp/1.png
+#!/bin/bash
+echo $2x$3'>'
+convert "$1".jpg -thumbnail $2x$3'>' /tmp/1.png
 convert -fill 'rgb(100,100,50)' -colorize 60%  /tmp/1.png /tmp/2.png
-convert -background 'rgb(147,120,80)'  /tmp/1.png -gravity center -extent 177x147 -raise 2 /tmp/3.png
-convert -background 'rgb(147,120,80)'  /tmp/2.png -gravity center -extent 177x147 -raise 2 /tmp/4.png
-convert /tmp/3.png -font  /usr/share/fonts/TTF/FreeSans.ttf  -fill white -pointsize 25 -annotate +5+120 $2 /tmp/5.png
-convert /tmp/4.png -font  /usr/share/fonts/TTF/FreeSans.ttf  -fill white -pointsize 25 -annotate +5+120 $2 /tmp/6.png
-convert /tmp/6.png /tmp/5.png -append $1.gif
+convert -background 'rgb(147,120,80)'  /tmp/1.png -gravity center -extent $[$2+$4]x$[$3+$4] -raise 2 /tmp/3.png
+convert -background 'rgb(147,120,80)'  /tmp/2.png -gravity center -extent $[$2+$4]x$[$3+$4] -raise 2 /tmp/4.png
+convert /tmp/3.png -font  /usr/share/fonts/TTF/FreeSans.ttf  -fill white -pointsize $5 -annotate +$6+$7 "$8" /tmp/5.png
+convert /tmp/4.png -font  /usr/share/fonts/TTF/FreeSans.ttf  -fill white -pointsize $5 -annotate +$6+$7 "$8" /tmp/6.png
+convert /tmp/6.png /tmp/5.png -append "$1".gif
 rm /tmp/*.png
