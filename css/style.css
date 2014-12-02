@@ -1,58 +1,59 @@
-/*Generali*/
-body{margin:27px auto 0 auto;color:#000000;background:#ddc891 url('../img/bkg_body.gif') repeat-x top;font-family: Tahoma;ial, Helvetica, sans-serif;font-size:14px;color:#ffffff}
-acronym{border-bottom:0;}
+ body{
+        margin:27px auto 0 auto;
+        color:#000000;
+        background:#ddc891 url('../img/bkg_body.gif') repeat-x top;
+        font-family:Tahoma;
+        font-size:11px;
+        color:#ffffff
+        }
+acronym{border-bottom:0}
 a{text-decoration:none;color:#fff}
 img{border:0}
-div{margin:0 auto 0 auto;text-align:center;}
-
-
-
-div.main{width:900px;}
+div{margin:0 auto 0 auto;text-align:center}
+div.main{width:900px}
 div.piva{float:right;text-align:right;background:url('../img/bkg_piva.gif') no-repeat bottom;width:900px;border-bottom:1px solid #ddc891;height:23px;color:#836436;font-size:11px}
-div.top{background:url('../img/bkg_top.gif') no-repeat top;height:224px;clear:both;}
+div.top{background:url('../img/bkg_top.gif') no-repeat top;height:224px;clear:both}
 div.home{margin:30px 0 0 445px;float:left}
-div.home a{width:450px;height:47px;display:block;text-indent:-1000px;overflow:hidden;}
-div.root {position:relative;top:20px;}
-ul.menu{list-style-type:none;float:right;background-color:#937850;border-right:10px solid #836436; margin:108px 0 0 250px;padding:0;}
-ul.menu li{float:left;height:39px;display:block;text-indent:-1000px;overflow:hidden;}
-ul.menu li a{display:block;height:39px;}
-ul.menu li.contatti{background:url('../img/mnu_contatti.gif') no-repeat top;width:78px;}
-div.lavori a{display:block;height:349px;}
-div.lavori{float:left;height:349px;display:block;text-indent:-1000px;overflow:hidden;margin:24px 70px;}
-div.lavori{background:url('../img/ingresso.gif') no-repeat top;width:464px;}
-div.lavori:hover{background-position:bottom;}
-ul.menu li.collaborazioni{background:url('../img/mnu_collaborazioni.gif') no-repeat top;width:138px;}
-ul.menu li:hover{background-position:bottom;}
-ul.menu li.att{background-position:bottom;}
-
+div.home a{width:450px;height:47px;display:block;text-indent:-1000px;overflow:hidden}
+div.root{position:relative;top:20px}
+ul.menu{list-style-type:none;float:right;background-color:#937850;border-right:10px solid #836436;margin:100px 0 0 250px;padding:0}
+ul.menu li{float:left;height:39px;display:block;text-indent:-1000px;overflow:hidden;margin:4px 4px 4px 4px}
+ul.menu li a{display:block;height:39px}
+ul.menu li.contatti{background:url('../img/mnu_contatti.gif') no-repeat top;width:78px}
+div.lavori a{display:block;height:349px}
+div.lavori{float:left;height:349px;display:block;text-indent:-1000px;overflow:hidden;margin:24px 70px}
+div.lavori{background:url('../img/ingresso.gif') no-repeat top;width:464px}
+div.lavori:hover{background-position:bottom}
+ul.menu li.collaborazioni{background:url('../img/mnu_collaborazioni.gif') no-repeat top;width:138px}
+ul.menu li:hover{background-position:bottom}
+ul.menu li.att{background-position:bottom}
 div.content{background-color:#937850;height:640px;margin-top:3px}
 div.bottom{background:url('../img/bkg_legni.png') repeat-x;height:127px;position:relative;top:-95px;left:0}
 div.dett{text-align:left;padding:34px 0 0 251px}
-
+div.nav{float:left;margin:20px 0 0 20px}
+ul.nav {list-style-type:none;}
+li.nav {color:#eee;font-size:30px}
+li.back {margin:0 0 0 0;}
 ul.box{list-style-type:none;margin:0;padding:34px 0 0 50px;float:left}
 ul.box li{float:left;height:147px;display:block;text-indent:-1000px;overflow:hidden;background-repeat:no-repeat;width:177px;margin:16px 16px 0 0}
-ul.box li a{display:block;height:147px;}
-ul.box li.cucine{background:url('../img/box_cucine.gif') top;}
-ul.box li.armadi{background:url('../img/box_armadi.gif') top;}
-ul.box li.tavoli{background:url('../img/box_tavoli.gif') top;}
-ul.box li.bagni{background:url('../img/box_bagni.gif') top;}
-ul.box li.librerie{background:url('../img/box_librerie.gif') top;}
-ul.box li.varie{background:url('../img/box_varie.gif') top;}
-ul.box li.progetti{background:url('../img/box_progetti.gif') top;}
-ul.box li:hover{background-position:bottom;}
-ul.box li.att{background-position:bottom;float:none;}
+ul.box li a{display:block;height:147px}
+ul.box li.cucine{background:url('../img/box_cucine.gif') top}
+ul.box li.armadi{background:url('../img/box_armadi.gif') top}
+ul.box li.tavoli{background:url('../img/box_tavoli.gif') top}
+ul.box li.bagni{background:url('../img/box_bagni.gif') top}
+ul.box li.librerie{background:url('../img/box_librerie.gif') top}
+ul.box li.varie{background:url('../img/box_varie.gif') top}
+ul.box li.progetti{background:url('../img/box_progetti.gif') top}
+ul.box li:hover{background-position:bottom}
+ul.box li.att{background-position:bottom;float:none}
 ul.box li.in{float:none;height:47px;text-indent:-100px;overflow:visible;margin-top:24px}
-
-div.foto{margin:34px 0 0 37px;float:left;width:571px}
-#gallery, #gallery1 {float:left;width:571px;margin:0;text-align:left}
-#gallery ul, #gallery1 ul { list-style: none;margin:0;padding:0;float:left}
-#gallery ul li, #gallery1 ul li { display: inline;margin:0 5px 0 0;padding:0}
-#gallery ul img, #gallery1 ul img {margin-bottom:5px}
-#gallery ul a:hover, #gallery1 ul a:hover { color: #fff; }
-
+div.foto{margin:20px 0 0 20px;float:left}
+#gallery, #gallery1{float:left;width:650px;margin:0;text-align:left}
+#gallery ul, #gallery1 ul{list-style:none;margin:0;padding:0;float:left}
+#gallery ul li, #gallery1 ul li{display:inline;margin:0 5px 0 0;padding:0}
+#gallery ul img, #gallery1 ul img{margin-bottom:5px}
+#gallery ul a:hover, #gallery1 ul a:hover{color:#fff}
 div.dett span{float:left;margin:9px 0 0 0}
 div.dett img.loghi{float:left;margin:0 15px 15px 0}
-
 ul.intro{list-style-type:none;margin:20px;padding:4px;float:left}
-ul.intro{font-size:24px;background-color:#937a50;}
-ul.intro li{text-align:left;}
+ul.intro{font-size:24px;background-color:#937a50}ul.intro li{text-align:left}

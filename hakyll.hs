@@ -1,49 +1,73 @@
 {-# LANGUAGE OverloadedStrings, ScopedTypeVariables #-}
 module Main where
 
-import Prelude hiding (id)
+import Prelude hiding (id,lookup)
 import Control.Category (id)
 import Control.Arrow ((>>>), (***), arr, second)
 import Data.Monoid (mempty, mconcat, mappend)
-import Data.Map (singleton, fromList)
+import Data.Map (singleton, fromList,lookup)
 import System.FilePath
-
+import Data.Maybe (fromMaybe)
+import Data.String
+import Data.List hiding (lookup)
 import Hakyll
+import Hakyll.Web.Html
 import Images
 
 
-complete = applyTemplateCompiler "templates/template.html" >>> relativizeUrlsCompiler
-
-lavori s = do
-    match (parseGlob $ s ++ ".html") $ route idRoute
-    create (parseIdentifier $  s ++ ".html") $ constA mempty
-	>>> requireAll (parseGlob ("photos/" ++ s ++ "/**.jpg") `mappend` inGroup (Just "linked")) 
-		(\p (ts :: [Page String]) -> setField "lavoro" s $ setField "elencoimmagini" (concatMap pageBody $ ts) p )
-	>>> applyTemplateCompiler "templates/foto_elenco.html"
-	>>> complete
+complete ctx y = loadAndApplyTemplate "templates/template.html" ctx y >>= relativizeUrls
+canonicalizePath x = '/':x
 
 
-main :: IO ()
 main = hakyll $ do
-
     match "templates/*" $ compile templateCompiler
 
-    match  "contatti.html" $ do 
-	route idRoute
-     	compile $ readPageCompiler >>> arr (setField "scelta" "contatti") >>> complete
     match  "collaborazioni.html" $ do 
 	route idRoute 
-     	compile $ readPageCompiler >>> arr (setField "scelta" "collaborazioni") >>> complete
+     	compile $ getResourceString >>= complete (constField "lavoro" "collaborazioni" `mappend` defaultContext)
+    match  "contatti.html" $ do 
+	route idRoute
+    	compile $ getResourceString >>=  complete (constField "lavoro" "contatti" `mappend` defaultContext) 
     match  "lavori.html" $ do 
 	route idRoute
-     	compile $ readPageCompiler >>> arr (setField "scelta" "lavori") >>> complete
-
+    	compile $ getResourceString >>=  complete (constField "lavoro" "lavori" `mappend` defaultContext) 
     match "index.html" $ do
 	route idRoute
-	compile $ readPageCompiler >>> complete
-
-    _  <- mapM lavori ["armadi","tavoli","bagni","cucine","varie","librerie","progetti"]
- 
+	compile $ getResourceString >>= complete (constField "lavoro" "" `mappend` defaultContext)
+    match "fotozilla/**/dir" $ do 
+        route $ customRoute $ flip addExtension "html" . takeDirectory . toFilePath
+        compile $ do 
+                ctx <- getUnderlying >>= getMetadata
+                q <-  (init . last . init. splitPath . toFilePath) `fmap` getUnderlying
+                d <- (init . joinPath . init . splitPath . toFilePath) `fmap` getUnderlying
+                let lavoro = canonicalizePath $ d </> fromMaybe "" (lookup "foto" ctx) 
+                s <- takeDirectory `fmap` toFilePath `fmap` getUnderlying
+                ts <- loadAll (fromGlob (s ++ "/**.jpg") .&&. hasVersion "linked")
+                --ds <- loadAll (fromGlob (s ++ "/*/dir") .&&. hasVersion "dlinked")
+                let ctx = mconcat 
+                        [ constField "lavoro" lavoro
+                        , constField "riferimento" q
+                        , constField "elencoimmagini" (concatMap itemBody ts)
+                        , constField "back" "/lavori.html"
+                        ] `mappend` metadataField `mappend` defaultContext
+                makeItem "" >>= loadAndApplyTemplate "templates/foto_elenco.html" ctx >>= complete ctx
+    match "fotozilla/dir" $ do 
+        route $ customRoute $ const "fotozilla.html"
+        compile $ do 
+                ctx <- getUnderlying >>= getMetadata
+                d <- (init . joinPath . init . splitPath . toFilePath) `fmap` getUnderlying
+                let lavoro = canonicalizePath $ d </> fromMaybe "" (lookup "foto" ctx) 
+                s <- takeDirectory `fmap` toFilePath `fmap` getUnderlying
+                ts <- loadAll (fromGlob (s ++ "/**.jpg") .&&. hasVersion "linked")
+                ds <- loadAll (fromGlob (s ++ "/*/dir") .&&. hasVersion "dlinked")
+                let ctx = mconcat 
+                        [ constField "lavoro" lavoro
+                        , constField "riferimento" "bottega"
+                        , constField "elencoimmagini" (concatMap itemBody ts)
+                        , constField "elencocartelle" (concatMap itemBody ds)
+                        , constField "back" (canonicalizePath $ "fotozilla.html")
+                        ] `mappend` metadataField `mappend` defaultContext
+                makeItem "" >>= loadAndApplyTemplate "templates/foto_elenco.html" ctx >>= complete ctx
     match "js/*" $ do
         route   idRoute
         compile copyFileCompiler
@@ -54,15 +78,29 @@ main = hakyll $ do
     match "css/*" $ do
         route   idRoute
         compile compressCssCompiler
-    group "raw" . match "photos/**.jpg" $ do
+    match "fotozilla/**.jpg" . version "raw" $ do
         route   idRoute
         compile $ imageResizeCompiler 500 400
-    group "thumbs" . match "photos/**.jpg" $ do
+    match "fotozilla/**.jpg" . version "thumbs" $ do
 	route $ setExtension ".thumb.jpg"
 	compile $ thumbResizeCompiler
-    group "linked" . match "photos/**.jpg" $ compile $
-	arr (fromMap . (\s -> fromList [("path",s),("thumb",replaceExtension s "thumb.jpg")]) . unResource) 
-	>>> applyTemplateCompiler "templates/immagine.html" 
     match "img/*" $ do
         route   idRoute
         compile copyFileCompiler
+    match "fotozilla/**.jpg" . version "linked" $ compile $ do
+        let     path = field "path" (return . canonicalizePath .toFilePath . itemIdentifier)
+                thumb = field "thumb" (return . canonicalizePath .flip replaceExtension "thumb.jpg" . toFilePath . itemIdentifier)
+	getResourceString >>= loadAndApplyTemplate "templates/immagine.html" (path `mappend` thumb)
+    match "fotozilla/**/dir" . version "dlinked" $ compile $ do
+        ctx <- getUnderlying >>= getMetadata
+        d <- (init . joinPath . init . splitPath . toFilePath) `fmap` getUnderlying
+        let     thumb = canonicalizePath .flip replaceExtension "thumb.jpg" $ d </> fromMaybe "" (lookup "foto" ctx) 
+                path = canonicalizePath .  flip addExtension "html" $ d
+	getResourceString  >>= loadAndApplyTemplate "templates/immagine.html" (constField "path" path `mappend` constField "thumb" thumb `mappend` defaultContext)
+    match "fotozilla/dir" . version "dlinked" $ compile $ do
+        ctx <- getUnderlying >>= getMetadata
+        d <- (init . joinPath . init . splitPath . toFilePath) `fmap` getUnderlying
+        let     thumb = canonicalizePath .flip replaceExtension "thumb.jpg" $ d </> fromMaybe "" (lookup "foto" ctx) 
+                path = canonicalizePath .  flip addExtension "html" $ d
+	getResourceString  >>= loadAndApplyTemplate "templates/immagine.html" (constField "path" path `mappend` constField "thumb" thumb `mappend` defaultContext)
+
