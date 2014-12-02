@@ -1,0 +1,8 @@
+#!/bin/bash
+convert -size $1x$2 canvas:'rgb(147,120,80)' -raise 1 /tmp/1.png
+convert -size $1x$2 canvas:'rgb(221,200,145)' -raise 1 /tmp/2.png
+convert /tmp/1.png -font  /usr/share/fonts/TTF/FreeSans.ttf  -fill 'rgb(255,255,255)' -pointsize $3 -annotate +$4+$5 "$6" /tmp/3.png
+convert /tmp/2.png -font  /usr/share/fonts/TTF/FreeSans.ttf  -fill 'rgb(89,68,37)' -pointsize $3 -annotate +$4+$5 "$6" /tmp/4.png
+convert /tmp/3.png /tmp/4.png -append img/mnu_"$7".gif
+
+rm /tmp/*.png

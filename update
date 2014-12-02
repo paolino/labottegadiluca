@@ -1,0 +1,11 @@
+#!/bin/bash
+if [ -f /tmp/update.labottegadiluca.lock ]
+then
+   echo locked
+else
+   touch /tmp/update.labottegadiluca.lock
+   cd /home/luca/labottegadiluca/
+   ./hakyll build
+   rm /tmp/update.labottegadiluca.lock
+fi
+
